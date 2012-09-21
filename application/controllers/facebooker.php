@@ -25,9 +25,11 @@ class Facebooker extends Controller
 
 
 
+/*
 echo "<pre>";
-//print_r($facebook);
-echo "</pre>";
+print_r($facebook);
+echo "</pre>";*/
+
 // Get User ID
 $user = $facebook->getUser();
 
@@ -42,7 +44,7 @@ if ($user) {
     // Proceed knowing you have a logged in user who's authenticated.
     $user_profile = $facebook->api('/me');
 
-	$friends = $facebook->api('/me/friends');
+	$friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username');
 		
 
   } catch (FacebookApiException $e) {
@@ -53,7 +55,7 @@ if ($user) {
 
 // Login or logout url will be needed depending on current user state.
 if ($user) {
-  $logoutUrl = $facebook->getLogoutUrl();
+  $logoutUrl= $facebook->getLogoutUrl();
 } else {
   $loginUrl = $facebook->getLoginUrl();
 }
@@ -65,43 +67,67 @@ endif;
 // This call will always work since we are fetching public data.
 $naitik = $facebook->api('/naitik');
 
+/*
 echo "<pre>";
-//print_r($user_profile);
-echo "</pre>";
+print_r($user_profile);
+echo "</pre>";*/
+
+/*
 echo "<pre>";
-//print_r($friends['data']);
-echo "</pre>";
-$count == 0;
+print_r($friends['data']);
+echo "</pre>";*/
+
+//$count == 0;
 				foreach ($friends['data'] as $key => $person) {
 					/*echo "<pre>";		
 					print_r($person);
 					echo "</pre>";*/
 			
-					$friendsInfo = $facebook->api($person['id']);
+					//$friendsInfo = $facebook->api($person['id']);
 				 
-					echo "<pre>";		
-					//print_r($friendsInfo);
-					echo "</pre>";
+				 	//$friends_arr[$person['id']] = $friendsInfo;
+				 
+				 
+										/*
+										echo "<pre>";		
+										print_r($friendsInfo);
+										echo "</pre>";*/
+					
 			
+					
+					
+					/*
 					if($count == 6){
-					break;
-					//$this->load->view('fbfriend', $friendsInfo);
-					//die();	
-					}
+																				break;
+																				//$this->load->view('fbfriend', $friendsInfo);
+																				//die();	
+																				}*/
+										
+																
+																//$count++;
+																						
+																						$u = new Friend;
+																						$u->fb_id = $person['id'];
+																						$u->fname = $person['first_name'];
+																						$u->lname = $person['last_name'];
+																						$u->username = $person['username'];
+																						$u->gender = $person['gender'];
+																						$u->save();
+																						$data = $person;
+																						unset($u);
+					
+					
 						
-						$count++;
-												
-												$u = new Friend;
-												$u->fb_id = $friendsInfo['id'];
-												$u->fname = $friendsInfo['first_name'];
-												$u->lname = $friendsInfo['last_name'];
-												$u->username = $friendsInfo['username'];
-												$u->gender = $friendsInfo['gender'];
-												$u->save();
-												$data = $friendsInfo;
-												unset($u);
-						
-					}
+				}
+
+$base = APPPATH."test.txt";
+$sdata = serialize($friends);
+$string = write_file($base,$sdata,'a+');
+/*
+echo "<pre>";		
+print_r($friends_arr);
+echo "</pre>";*/
+
 
 //echo "records added";
 
