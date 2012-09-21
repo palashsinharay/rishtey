@@ -25,10 +25,7 @@ class Facebooker extends Controller
 
 
 
-/*
-echo "<pre>";
-print_r($facebook);
-echo "</pre>";*/
+
 
 // Get User ID
 $user = $facebook->getUser();
@@ -42,7 +39,7 @@ $user = $facebook->getUser();
 if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.
-    $user_profile = $facebook->api('/me');
+    $user_profile = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username');
 
 	$friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username');
 		
@@ -67,67 +64,43 @@ endif;
 // This call will always work since we are fetching public data.
 $naitik = $facebook->api('/naitik');
 
-/*
-echo "<pre>";
-print_r($user_profile);
-echo "</pre>";*/
 
-/*
-echo "<pre>";
-print_r($friends['data']);
-echo "</pre>";*/
 
 //$count == 0;
-				foreach ($friends['data'] as $key => $person) {
-					/*echo "<pre>";		
-					print_r($person);
-					echo "</pre>";*/
+				/*foreach ($friends['data'] as $key => $person) {
 			
-					//$friendsInfo = $facebook->api($person['id']);
-				 
-				 	//$friends_arr[$person['id']] = $friendsInfo;
-				 
-				 
-										/*
-										echo "<pre>";		
-										print_r($friendsInfo);
-										echo "</pre>";*/
-					
 			
 					
 					
-					/*
 					if($count == 6){
-																				break;
-																				//$this->load->view('fbfriend', $friendsInfo);
-																				//die();	
-																				}*/
+												break;
+						//$this->load->view('fbfriend', $friendsInfo);
+					    //die();	
+									}
 										
 																
-																//$count++;
+					//$count++;
 																						
-																						$u = new Friend;
-																						$u->fb_id = $person['id'];
-																						$u->fname = $person['first_name'];
-																						$u->lname = $person['last_name'];
-																						$u->username = $person['username'];
-																						$u->gender = $person['gender'];
-																						$u->save();
-																						$data = $person;
-																						unset($u);
+								$u = new Friend;
+								$u->fb_id = $person['id'];
+								$u->fname = $person['first_name'];
+								$u->lname = $person['last_name'];
+								$u->username = $person['username'];
+								$u->gender = $person['gender'];
+								$u->save();
+								$data = $person;
+								unset($u);
 					
 					
 						
-				}
+}*/
 
-$base = APPPATH."test.txt";
-$sdata = serialize($friends);
-$string = write_file($base,$sdata,'a+');
-/*
-echo "<pre>";		
-print_r($friends_arr);
-echo "</pre>";*/
-
+$ufile = APPPATH.$user_profile[username].date("Y-m-d");
+$ffile = APPPATH.$user_profile[username]."-friendlist".date("Y-m-d");
+$udata = serialize($user_profile);
+$fdata = serialize($friends);
+$string = write_file($ufile,$udata,'a+');
+$string = write_file($ffile,$fdata,'a+');
 
 //echo "records added";
 
@@ -137,23 +110,10 @@ $q = Doctrine_Query::create()
 
 $result = $q->execute();
 $data_arr = $result->toArray();
-/*foreach ($data_arr  as $value) {
-	$data['id'] = $value['id'];
-	$data['fb_id'] = $value['fb_id'];
-	$data['first_name'] = $value['first_name'];
-	$data['last_name'] = $value['last_name'];
-	$data['username'] = $value['username'];
-	$data['gender'] = $value['gender'];
-}*/
+
 $data['records'] = $data_arr;
-/*echo $data[0]->id;		
-echo $data[0]->fb_id;
-echo $data[0]->first_name;
-echo $data[1]->fb_id;
-echo $data[1]->fb_id;
-echo $data[1]->first_name;*/
-	
- $this->load->view('fbfriend', $data);
+
+$this->load->view('fbfriend', $data);
  }
 }
 ?>
