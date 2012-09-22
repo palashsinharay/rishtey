@@ -39,9 +39,9 @@ $user = $facebook->getUser();
 if ($user) {
   try {
     // Proceed knowing you have a logged in user who's authenticated.
-    $user_profile = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username');
+    $user_profile = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture');
 
-	$friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username');
+	$friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture');
 		
 
   } catch (FacebookApiException $e) {
@@ -106,7 +106,7 @@ $string = write_file($ffile,$fdata,'a+');
 
 $q = Doctrine_Query::create()
 	->select('*')
-	->from('friend');
+	->from('FbUserMaster');
 
 $result = $q->execute();
 $data_arr = $result->toArray();

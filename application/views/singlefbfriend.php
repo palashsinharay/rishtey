@@ -50,26 +50,22 @@
 <div class="container">
 		<table class="table table-bordered table-striped">
 			<tr>
-				<th>Serial No.</th>
-				<th>Profile picture</th>
+				<td>Serial No.</td>
 				<th>facebook id</th>
 				<th>first Name</th>
 				<th>Last Name</th>
 				<th>Username</th>
 				<th>Gender</th>
-				<th>DOB</th>
 			</tr>
 			<?php $count=1; ?>
 			<?php foreach($records as $row): ?>
 			<tr>
 				<td><?php echo $count++ ?></td>
-				<td><img src="<?php echo $row['picture'] ?>" alt="Profile pics"> </td>
-				<td><?php echo $row['fb_user_id'] ?></td>
+				<td><?php echo $row['fb_id'] ?></td>
 				<td><?php echo $row['fname'] ?></td>
 				<td><?php echo $row['lname'] ?></td>
 				<td><?php echo $row['username'] ?></td>
 				<td><?php echo $row['gender'] ?></td>
-				<td><?php echo $row['birthday'] ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
