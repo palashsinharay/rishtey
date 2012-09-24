@@ -7,9 +7,24 @@ class FileToDb extends Controller {
 		parent::Controller();
 	}
 	
-	public function index()
+	public function takefile()
 	{
-		$string = read_file(APPPATH."palash.s.ray-friendlist2012-09-22");
+		$fbp = Doctrine::getTable('FbProcess')->findByStatus('0');
+		
+		foreach ($fbp as $key => $value) {
+			$fbu = Doctrine::getTable('FbUserMaster')->findOneByFb_user_id($fbp[$key]->fb_user_id);
+			//echo $fbu->id;
+			//die();
+			$this->index($fbp[$key]->filename,$fbu->id);
+			
+		}
+		//print $s[0]->filename;
+		
+	}
+	
+	public function index($strfile,$localuserid)
+	{
+		$string = read_file(APPPATH.$strfile);
 		$friends = unserialize($string);
 		
 		/*echo "<pre>";
@@ -36,9 +51,16 @@ class FileToDb extends Controller {
 								$u->picture = $person['picture'];
 								$u->birthday = $person['birthday'];
 								$u->gender = $person['gender'];
+								$u->relationship_status = $person['relationship_status'];
 								$u->save();
 								unset($u);
-				
+								$temp = Doctrine::getTable('FbUserMaster')->findOneByFb_user_id($person['id']);
+								
+								$n = new FbNetwork;
+								$n->fb_id = $temp->id;
+								$n->ref_fb_id = $localuserid;
+								$n->save();
+								unset($n);
 				}
 	}
 }

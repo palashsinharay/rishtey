@@ -4,9 +4,9 @@ class FbProcess extends Doctrine_Record {
 
 	public function setTableDefinition() {
 		//$this->hasColumn('id', 'integer', 11);
-		$this->hasColumn('fb_user_master_id', 'integer', 11);
+		$this->hasColumn('fb_user_id', 'integer', 11);
 		$this->hasColumn('status', 'integer', 4);
-		$this->hasColumn('file', 'string', 255);
+		$this->hasColumn('filename', 'string', 255);
 		$this->hasColumn('send_confirmation_mail', 'integer', 4);	
 		
 	}

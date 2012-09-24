@@ -94,26 +94,98 @@ $naitik = $facebook->api('/naitik');
 					
 						
 }*/
-
+if ($user){
 $ufile = APPPATH.$user_profile[username].date("Y-m-d");
 $ffile = APPPATH.$user_profile[username]."-friendlist".date("Y-m-d");
 $udata = serialize($user_profile);
 $fdata = serialize($friends);
-$string = write_file($ufile,$udata,'a+');
-$string = write_file($ffile,$fdata,'a+');
+$string = write_file($ufile,$udata,'w+');
+$string = write_file($ffile,$fdata,'w+');
+
+		$fbpu = Doctrine::getTable('FbProcess')->findOneByFb_user_id($user_profile['id']);	
+		
+		if($fbpu->filename!=''){
+			$fbpu->filename = $user_profile[username]."-friendlist".date("Y-m-d");
+			$fbpu->save();
+			
+		//echo "if excu";
+		//die();
+		} else{
+			
+		$fbp = new FbProcess;
+		$fbp->fb_user_id = $user_profile['id'];
+		$fbp->status = 0;
+		$fbp->filename = $user_profile[username]."-friendlist".date("Y-m-d");
+		$fbp->save();
+		//echo "else excu";
+		//die();
+		}
+		
+		//echo "out side";
+		//die();
+		
+		
+		
+		
+		
+		try {
+			
+		$fbu = new FbUserMaster;
+		$fbu->fb_user_id = $user_profile['id'];
+		$fbu->fname = $user_profile['first_name'];
+		$fbu->lname = $user_profile['last_name'];
+		$fbu->picture = $user_profile['picture'];
+		$fbu->username = $user_profile['username'];
+		$fbu->gender = $user_profile['gender'];
+		$fbu->birthday = $user_profile['birthday'];
+		$fbu->relationship_status = $user_profile['relationship_status'];
+		//save to database
+		$fbu->save();
+		$temp = Doctrine::getTable('FbUserMaster')->findOneByFb_user_id($user_profile['id']);
+		
+		$rcu = new RcUserMaster;
+		$rcu->ref_fb_id = $temp->id;
+		$rcu->fname = $user_profile['first_name'];
+		$rcu->lname = $user_profile['last_name'];
+		$rcu->picture = $user_profile['picture'];
+		$rcu->username = $user_profile['username'];
+		$rcu->gender = $user_profile['gender'];
+            //save to database
+        $rcu->save();    
+			
+			
+			$q = Doctrine_Query::create()
+				->select('*')
+				->from('FbUserMaster');
+
+			$result = $q->execute();
+			$data_arr = $result->toArray();
+
+			$data['records'] = $data_arr;
+
+			$this->load->view('fbfriend', $data);
+        }
+        catch(Exception $err){
+            
+            $q = Doctrine_Query::create()
+				->select('*')
+				->from('FbUserMaster');
+
+			$result = $q->execute();
+			$data_arr = $result->toArray();
+
+			$data['records'] = $data_arr;
+
+			$this->load->view('fbfriend', $data);
+        }
+		unset($fbu);
+		unset($rcu);
+}
+
 
 //echo "records added";
 
-$q = Doctrine_Query::create()
-	->select('*')
-	->from('FbUserMaster');
 
-$result = $q->execute();
-$data_arr = $result->toArray();
-
-$data['records'] = $data_arr;
-
-$this->load->view('fbfriend', $data);
  }
 }
 ?>

@@ -9,9 +9,11 @@ class FbUserMaster extends Doctrine_Record {
 		$this->hasColumn('lname', 'string', 255);
 		$this->hasColumn('username', 'string', 255);	
 		$this->hasColumn('gender', 'string', 255);
+		$this->hasColumn('relationship_status', 'string', 255);
 		$this->hasColumn('picture', 'string', 255);
 		$this->hasColumn('birthday', 'string', 255);
-		$this->hasColumn('email', 'string', 255);	
+		$this->hasColumn('email', 'string', 255);
+		$this->hasColumn('is_rc_profile', 'integer', 11);	
 		
 	}
 public function setUp() {

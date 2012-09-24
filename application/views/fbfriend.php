@@ -21,8 +21,8 @@
         <div class="nav-collapse">
           <ul class="nav">
             <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
-            <li><a href="#">Link</a></li>
-            <li><a href="#">Link</a></li>
+            <li><a href="<?php echo $logoutUrl;?>">logout</a></li>
+            <li><a href="<?php echo $loginUrl;?>">login</a></li>
             <li><a href="#">Link</a></li>
             <li class="dropdown">
               <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
