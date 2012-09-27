@@ -19,7 +19,7 @@ $data_arr = $result->toArray();
 
 $data['records'] = $data_arr;
 
-$this->load->view('fbfriend', $data);
+$this->load->view('singlefbfriend', $data);
 
 }
 }

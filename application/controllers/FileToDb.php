@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(0);
 class FileToDb extends Controller {
 	
 	function FileToDb() 
@@ -26,15 +26,11 @@ class FileToDb extends Controller {
 	{
 		$string = read_file(APPPATH.$strfile);
 		$friends = unserialize($string);
-		
-		/*echo "<pre>";
-				print_r($friends['data']);
-				echo "</pre>";*/
-		
+				
 				
 			foreach ($friends['data'] as $key => $person) {
+									
 					
-								
 								/*$u = new Friend;
 								$u->fb_id = $person['id'];
 								$u->fname = $person['first_name'];
@@ -43,13 +39,20 @@ class FileToDb extends Controller {
 								$u->gender = $person['gender'];
 								$u->save();
 								unset($u);*/
+								if (strlen($person['birthday'])<10){
+								continue;
+								}
 								$u = new FbUserMaster;
 								$u->fb_user_id = $person['id'];
 								$u->fname = $person['first_name'];
 								$u->lname = $person['last_name'];
 								$u->username = $person['username'];
-								$u->picture = $person['picture'];
+								$u->picture = $person['picture']['data']['url'];
+								//$u->picture = $person['picture'];
+								
 								$u->birthday = $person['birthday'];
+							
+								
 								$u->gender = $person['gender'];
 								$u->relationship_status = $person['relationship_status'];
 								$u->save();
@@ -57,8 +60,8 @@ class FileToDb extends Controller {
 								$temp = Doctrine::getTable('FbUserMaster')->findOneByFb_user_id($person['id']);
 								
 								$n = new FbNetwork;
-								$n->fb_id = $temp->id;
-								$n->ref_fb_id = $localuserid;
+								$n->fb_id = $localuserid;
+								$n->ref_fb_id = $temp->id;
 								$n->save();
 								unset($n);
 				}

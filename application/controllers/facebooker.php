@@ -9,19 +9,19 @@ class Facebooker extends Controller
    parent::Controller();
    $this->load->helper('url');
    $this->load->library('facebook/facebook');
+   //$this->load->library('database');
  }
 
  function index()
- {
-   //$data['api_key'] = "345381405552220";
-   //$data['secret_key'] = "2058d2d39f8b71897de2d1ec6f513a30";
-
+ {   //testpala
+ 	//api_key = 118878424929011
+	//secret_key = da77afeb6272bd1fe1fdab3b8cacab15
    
+   //$data['api_key'] = "366585186712793";palash
+   //$data['secret_key'] = "6144b6eef34ef72d1b3e5420a27ce94c";
+  
    
-   $facebook = new Facebook(array(
-  'appId' => '366585186712793',
-  'secret' => '6144b6eef34ef72d1b3e5420a27ce94c',
-));
+   $facebook = new Facebook(array('appId' => '118878424929011', 'secret' => 'da77afeb6272bd1fe1fdab3b8cacab15'));
 
 
 
@@ -56,44 +56,28 @@ if ($user) {
 } else {
   $loginUrl = $facebook->getLoginUrl();
 }
+
 if ($user):
 echo "<a href='$logoutUrl'>Logout</a>";
 else:
 echo "<a href='$loginUrl'>Login with Facebook</a>";
 endif;
-// This call will always work since we are fetching public data.
-$naitik = $facebook->api('/naitik');
 
 
 
-//$count == 0;
-				/*foreach ($friends['data'] as $key => $person) {
-			
-			
-					
-					
-					if($count == 6){
-												break;
-						//$this->load->view('fbfriend', $friendsInfo);
-					    //die();	
-									}
-										
-																
-					//$count++;
-																						
-								$u = new Friend;
-								$u->fb_id = $person['id'];
-								$u->fname = $person['first_name'];
-								$u->lname = $person['last_name'];
-								$u->username = $person['username'];
-								$u->gender = $person['gender'];
-								$u->save();
-								$data = $person;
-								unset($u);
-					
-					
-						
-}*/
+
+/*
+echo "<pre>";
+print_r($friends);
+echo "</pre>";
+
+die();*/
+
+
+
+
+
+
 if ($user){
 $ufile = APPPATH.$user_profile[username].date("Y-m-d");
 $ffile = APPPATH.$user_profile[username]."-friendlist".date("Y-m-d");
@@ -124,17 +108,15 @@ $string = write_file($ffile,$fdata,'w+');
 		//echo "out side";
 		//die();
 		
-		
-		
-		
-		
+				
 		try {
 			
 		$fbu = new FbUserMaster;
 		$fbu->fb_user_id = $user_profile['id'];
 		$fbu->fname = $user_profile['first_name'];
 		$fbu->lname = $user_profile['last_name'];
-		$fbu->picture = $user_profile['picture'];
+		$fbu->picture = $user_profile['picture']['data']['url'];
+		//$fbu->picture = $user_profile['picture'];
 		$fbu->username = $user_profile['username'];
 		$fbu->gender = $user_profile['gender'];
 		$fbu->birthday = $user_profile['birthday'];
@@ -147,7 +129,8 @@ $string = write_file($ffile,$fdata,'w+');
 		$rcu->ref_fb_id = $temp->id;
 		$rcu->fname = $user_profile['first_name'];
 		$rcu->lname = $user_profile['last_name'];
-		$rcu->picture = $user_profile['picture'];
+		$rcu->picture = $user_profile['picture']['data']['url'];
+		//$rcu->picture = $user_profile['picture'];
 		$rcu->username = $user_profile['username'];
 		$rcu->gender = $user_profile['gender'];
             //save to database
@@ -166,15 +149,22 @@ $string = write_file($ffile,$fdata,'w+');
 			$this->load->view('fbfriend', $data);
         }
         catch(Exception $err){
+            	
+				
+				
+				
             
             $q = Doctrine_Query::create()
 				->select('*')
-				->from('FbUserMaster');
+				->from('FbUserMaster')
+				->where('relationship_status = ?','Single');
+				 
 
 			$result = $q->execute();
 			$data_arr = $result->toArray();
 
 			$data['records'] = $data_arr;
+			$data['frnd_count'] = count($friends['data']);
 
 			$this->load->view('fbfriend', $data);
         }
@@ -187,5 +177,9 @@ $string = write_file($ffile,$fdata,'w+');
 
 
  }
+ 
+
+
+
 }
 ?>

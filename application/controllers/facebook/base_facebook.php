@@ -596,6 +596,7 @@ abstract class BaseFacebook
 * @return string The URL for the logout flow
 */
   public function getLogoutUrl($params=array()) {
+    	
     return $this->getUrl(
       'www',
       'logout.php',

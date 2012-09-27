@@ -20,33 +20,38 @@
         <a href="#" class="brand">RishteyConnect</a>
         <div class="nav-collapse">
           <ul class="nav">
+            <!--
             <li class="active"><a href="<?php echo base_url();?>">Home</a></li>
-            <li><a href="<?php echo $logoutUrl;?>">logout</a></li>
-            <li><a href="<?php echo $loginUrl;?>">login</a></li>
-            <li><a href="#">Link</a></li>
-            <li class="dropdown">
-              <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li class="divider"></li>
-                <?php if($user):?>
-                <li><a href="<?php echo $logoutUrl;?>">Logout</a></li>
-                <?php else:?>
-                <li><a href="<?php echo $loginUrl;?>">Login with Facebook</a></li>
-                <?php endif;?>
-              </ul>
-            </li>
+                        <li><a href="<?php echo $logoutUrl;?>">logout</a></li>
+                        <li><a href="<?php echo $loginUrl;?>">login</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li class="dropdown">
+                          <a data-toggle="dropdown" class="dropdown-toggle" href="#">Dropdown <b class="caret"></b></a>
+                          <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li class="divider"></li>
+                            <?php if($user):?>
+                            <li><a href="<?php echo $logoutUrl;?>">Logout</a></li>
+                            <?php else:?>
+                            <li><a href="<?php echo $loginUrl;?>">Login with Facebook</a></li>
+                            <?php endif;?>
+                          </ul>
+                        </li>-->
+            
           </ul>
+          <!--
           <form action="" class="navbar-search pull-left">
-            <input type="text" placeholder="Search" class="search-query span2">
-          </form>
+                      <input type="text" placeholder="Search" class="search-query span2">
+                    </form>-->
+          
           
         </div><!-- /.nav-collapse -->
       </div>
     </div><!-- /navbar-inner -->
   </div>
+  <strong>Direct Friends: <?php echo $frnd_count;?></strong>
 <div class="container">
 		<table class="table table-bordered table-striped">
 			<tr>
@@ -58,6 +63,7 @@
 				<th>Username</th>
 				<th>Gender</th>
 				<th>DOB</th>
+				<th>Relationship Status</th>
 			</tr>
 			<?php $count=1; ?>
 			<?php foreach($records as $row): ?>
@@ -70,6 +76,7 @@
 				<td><?php echo $row['username'] ?></td>
 				<td><?php echo $row['gender'] ?></td>
 				<td><?php echo $row['birthday'] ?></td>
+				<td><?php echo $row['relationship_status'] ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>

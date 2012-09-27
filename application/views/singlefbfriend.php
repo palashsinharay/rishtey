@@ -31,11 +31,11 @@
                 <li><a href="#">Another action</a></li>
                 <li><a href="#">Something else here</a></li>
                 <li class="divider"></li>
-                <?php if($user):?>
-                <li><a href="<?php echo $logoutUrl;?>">Logout</a></li>
-                <?php else:?>
-                <li><a href="<?php echo $loginUrl;?>">Login with Facebook</a></li>
-                <?php endif;?>
+                
+                <li><a href="">Logout</a></li>
+          
+                <li><a href="">Login with Facebook</a></li>
+           
               </ul>
             </li>
           </ul>
@@ -52,20 +52,24 @@
 			<tr>
 				<td>Serial No.</td>
 				<th>facebook id</th>
+				<th>Profile picture</th>
 				<th>first Name</th>
 				<th>Last Name</th>
 				<th>Username</th>
 				<th>Gender</th>
+				<th>DOB</th>
 			</tr>
 			<?php $count=1; ?>
 			<?php foreach($records as $row): ?>
 			<tr>
 				<td><?php echo $count++ ?></td>
-				<td><?php echo $row['fb_id'] ?></td>
+				<td><?php echo $row['fb_user_id'] ?></td>
+				<td><img src="<?php echo $row['picture'] ?>" alt="Profile pics"> </td>
 				<td><?php echo $row['fname'] ?></td>
 				<td><?php echo $row['lname'] ?></td>
 				<td><?php echo $row['username'] ?></td>
 				<td><?php echo $row['gender'] ?></td>
+				<td><?php echo $row['birthday'] ?></td>
 			</tr>
 			<?php endforeach; ?>
 		</table>
