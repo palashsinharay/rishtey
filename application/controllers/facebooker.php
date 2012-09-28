@@ -12,6 +12,158 @@ class Facebooker extends Controller
    //$this->load->library('database');
  }
 
+ function getSuggestionList()
+ {
+ 	//this will generate array for suggetion list
+ 	
+ 	$suggestionList = array();
+	//write the logic here.
+	return $suggestionList;
+ 	
+ }
+ 
+ function getNetworkData()
+ {
+ 	//this will generate array for NetworkData list
+ 	
+ 	$networkData = array();
+	//write the logic here.
+	return $networkData;
+ 	
+ }
+ 
+ function getHelpFriend()
+ {
+ 	//this will pickup one friend randamly from the suggestionList
+ 	
+ 	$helpFriend = array();
+	//write the logic here.
+	return $helpFriend;
+ 	
+ }
+ 
+ function getFbData($facebook)
+ {
+ 	//this will get fb data(user profile details and friends details) from facebook
+ 	$fbData['userProfile'] = array();
+ 	$fbData['friendsDetails'] = array();
+	
+	
+	try {
+	    // Proceed knowing you have a logged in user who's authenticated.
+	    $fbData['userProfile'] = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture,email');
+	
+		$fbData['friendsDetails'] = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture,email');
+			
+	
+		  	} catch (FacebookApiException $e) 
+		  			{
+		    		error_log($e);
+		    		$user = null;
+					
+					return null;
+		  			}
+				
+	
+	return $fbData;
+ }
+ 
+ function fileWrite($var)
+ {   
+ 	
+ 	//$ufile = APPPATH.$user_profile[username].date("Y-m-d");
+	$ffile = APPPATH.$var['userProfile']['username']."-friendlist".date("Y-m-d");
+	//$udata = serialize($user_profile);
+	$fdata = serialize($var['friendsDetails']);
+	//$string = write_file($ufile,$udata,'w+');
+	$string = write_file($ffile,$fdata,'w+');
+
+	$fbpu = Doctrine::getTable('FbProcess')->findOneByFb_user_id($user_profile['id']);	
+		
+	if($fbpu->filename!=''){
+		$fbpu->filename = $var['userProfile']['username']."-friendlist-".date("Y-m-d");
+		$fbpu->save();
+		
+	//echo "if excu";
+	//die();
+	} else{
+			
+		$fbp = new FbProcess;
+		$fbp->fb_user_id = $user_profile['id'];
+		$fbp->status = 0;
+		$fbp->filename = $var['userProfile']['username']."-friendlist-".date("Y-m-d");
+		$fbp->save();
+		//echo "else excu";
+		//die();
+		}
+		
+		//echo "out side";
+		//die();
+		
+				
+	try {
+			
+		$fbu = new FbUserMaster;
+		$fbu->fb_user_id = $var['userProfile']['id'];
+		$fbu->fname = $var['userProfile']['first_name'];
+		$fbu->lname = $var['userProfile']['last_name'];
+		$fbu->picture = $var['userProfile']['picture']['data']['url'];
+		//$fbu->picture = $user_profile['picture'];
+		$fbu->username = $var['userProfile']['username'];
+		$fbu->gender = $var['userProfile']['gender'];
+		$fbu->birthday = $var['userProfile']['birthday'];
+		$fbu->relationship_status = $user_profile['relationship_status'];
+		//save to database
+		$fbu->save();
+		$temp = Doctrine::getTable('FbUserMaster')->findOneByFb_user_id($user_profile['id']);
+		
+		$rcu = new RcUserMaster;
+		$rcu->ref_fb_id = $temp->id;
+		$rcu->fname = $var['userProfile']['first_name'];
+		$rcu->lname = $var['userProfile']['last_name'];
+		$rcu->picture = $var['userProfile']['picture']['data']['url'];
+		//$rcu->picture = $user_profile['picture'];
+		$rcu->username = $var['userProfile']['username'];
+		$rcu->gender = $var['userProfile']['gender'];
+            //save to database
+        $rcu->save();    
+			
+			
+			$q = Doctrine_Query::create()
+				->select('*')
+				->from('FbUserMaster');
+
+			$result = $q->execute();
+			$data_arr = $result->toArray();
+
+			$data['records'] = $data_arr;
+
+			$this->load->view('fbfriend', $data);
+        }
+        catch(Exception $err){
+            		
+            	$q = Doctrine_Query::create()
+				->select('*')
+				->from('FbUserMaster')
+				->where('relationship_status = ?','Single');
+				 
+
+			$result = $q->execute();
+			$data_arr = $result->toArray();
+
+			$data['records'] = $data_arr;
+			$data['frnd_count'] = count($friends['data']);
+
+			$this->load->view('fbfriend', $data);
+        }
+		unset($fbu);
+		unset($rcu);
+		return 1;
+ }
+ 
+ 
+ 
+ 
  function index()
  {   //testpala
  	//api_key = 118878424929011
@@ -36,25 +188,15 @@ $user = $facebook->getUser();
 // Facebook, but we don't know if the access token is valid. An access
 // token is invalid if the user logged out of Facebook.
 
-if ($user) {
-  try {
-    // Proceed knowing you have a logged in user who's authenticated.
-    $user_profile = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture');
 
-	$friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture');
-		
 
-  } catch (FacebookApiException $e) {
-    error_log($e);
-    $user = null;
-  }
-}
+
 
 // Login or logout url will be needed depending on current user state.
 if ($user) {
   $logoutUrl= $facebook->getLogoutUrl();
 } else {
-  $loginUrl = $facebook->getLoginUrl();
+  $loginUrl = $facebook->getLoginUrl(array('scope' => 'email,read_stream,user_birthday'));
 }
 
 if ($user):
@@ -65,20 +207,40 @@ endif;
 
 
 
-
 /*
+echo "<pre>";
+print_r($user_profile);
+echo "</pre>";
+
 echo "<pre>";
 print_r($friends);
 echo "</pre>";
 
-die();*/
+die();
+*/
 
-
+if ($user) {
+  /*
+  try {
+      // Proceed knowing you have a logged in user who's authenticated.
+      $user_profile = $facebook->api('/me?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture,email');
+            $friends = $facebook->api('/me/friends?fields=first_name,gender,id,birthday,last_name,username,relationship_status,picture,email');
+                        } catch (FacebookApiException $e) {
+      error_log($e);
+      $user = null;
+    }*/
+    echo "asasdasd";
+    $fbData = getFbData($facebook);
+	die('sd');
+    echo fileWrite($fbData);
+  
+}
 
 
 
 
 if ($user){
+/*
 $ufile = APPPATH.$user_profile[username].date("Y-m-d");
 $ffile = APPPATH.$user_profile[username]."-friendlist".date("Y-m-d");
 $udata = serialize($user_profile);
@@ -169,7 +331,8 @@ $string = write_file($ffile,$fdata,'w+');
 			$this->load->view('fbfriend', $data);
         }
 		unset($fbu);
-		unset($rcu);
+		unset($rcu);*/
+
 }
 
 
