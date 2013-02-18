@@ -5,7 +5,7 @@ $(document).ready(function() {
 
 		var fb_user_id = $('input[name="fb_user_id"]').val();
 		
-		$("a#"+a_id).html('<img src="http://'+location.host+'/images/ajax-loader.gif" alt=""/>');
+		$("a#"+a_id).html('<img style="position:absolute; width:31px; height:31px; display:block; left:38px; top:40px;" src="http://'+location.host+'/images/ajax-loader.gif" alt=""/>');
 		//return false;
 		
 		e.preventDefault();

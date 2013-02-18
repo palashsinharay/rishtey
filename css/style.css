@@ -497,11 +497,12 @@ a.btn-signin {
     text-transform:uppercase;
     text-decoration:none;
     min-width:120px;
-    !width:120px;
+    !width:130px;
 }
 a.btn-signin img {
     float:right;
     margin:10px 15px 0 10px;
+    margin:10px 6px 0 10px \0/;
 }
 a.btn-signin span {
     float:left;
@@ -3564,9 +3565,9 @@ a#my_dashboard {
     margin-left:16px;
 }
 #upld_box {
-    background:#FFF;
-    border:1px solid #D6D5C1;
-    border-radius: 6px 6px 6px 6px;
+    background:/*#FFF*/url("../images/pattern-repeat.jpg") repeat scroll 0 0 transparent;
+    border:/*1px solid #D6D5C1*/1px solid #C8C8C9;
+    border-radius: 8px;
     /*left: 0;*/
     margin-left: 0;
     min-height: 40px;
@@ -4018,8 +4019,13 @@ button.btnDisable span span {
 	width:55px;
 }
 /*------------------*/
-#ui-id-1 {
-border: 1px solid #C8C8C9!important;
-background: #fff!important;
+a.pimg {
+    /*width:107px;
+    height:107px;
+    display:block;*/
+}
+a.pimg img {
+    margin:0 auto;
+    display:block;
 }
 /*------------------*/

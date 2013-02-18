@@ -27,7 +27,7 @@ class processUpload extends Controller
         // "is_uploaded_file" tells whether the file was uploaded via HTTP POST
         if(!isset($_FILES['ImageFile']) || !is_uploaded_file($_FILES['ImageFile']['tmp_name']))
         {
-           die('Upload Error!'); // output error when above checks fail.
+           die('<img width="107" height="107" src="http://'.self::$bucket.'.s3.amazonaws.com/files/profile_images/thumbs/no_profile_picture.jpg" title="Picture '.$_POST['a_id'].'">'.'Upload Error! '); // output error when above checks fail.
         }
 		
         // Elements (values) of $_FILES['ImageFile'] array

@@ -1405,10 +1405,6 @@
 .ui-tabs-nav.ui-widget-header {
         border:none!important;
         box-shadow: none!important;
-}	
-
-#content_body .ui-widget-content{
-		background:none!important;	
 }
    
 </style>
@@ -1547,7 +1543,7 @@
             
             //show the loader image
             $('a#'+a_id[1]+".delete.pimg").hide();	
-            $('a#'+a_id_val).html('<img height="20" width="20" src="http://'+top.location.host+'/images/ajax-loader.gif" alt=""/>');
+            $('a#'+a_id_val).html('<img style="position:absolute; width:31px; height:31px; display:block; left:38px; top:40px;" src="http://'+top.location.host+'/images/ajax-loader.gif" alt=""/>');
             
             //return false;
             

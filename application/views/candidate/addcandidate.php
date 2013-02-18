@@ -133,10 +133,10 @@
 				<div class="lft-block">
 				  <?php echo $leftPanelCount; ?>
 				</div>  
-				<!--<div id="help-frnd-lft-block" class="lft-block">  -->
+<!--		<div id="help-frnd-lft-block" class="lft-block">  -->
 				  <?php echo $helpFriendData; ?>
-				<!--</div>-->
-			</div>
+<!--                        </div>		-->
+                        </div>
 			
 			<div class="rghtPan">
 				<h4>Most of the users are looking for a match for someone special.</h4>

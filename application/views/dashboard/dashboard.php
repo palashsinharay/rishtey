@@ -179,9 +179,12 @@ $('#getpsetting').live("click", function () {
           //ajax call to get all interest interaction for interest tab
 		  $.ajax({
 			type: "POST",
-			url:"<?php echo base_url();?>/dashboard/getMessage/"+userid,
+			url:"<?php echo base_url();?>dashboard/getMessage/"+userid,
 			success: function(data){
 				//alert(chatMatch);
+                                if(data != null)
+                                {
+                                 //alert(data);
                         var inter = JSON.parse(data);
 				//$('#interaction').html(data);
                                 //alert(inter);
@@ -191,7 +194,7 @@ $('#getpsetting').live("click", function () {
                                 // chatMatch = '';
                                 var chatMatch = $.ajax({
                                    type:"POST",
-                                   url:"<?php echo base_url();?>/dashboard/getFbidToNameAjax/"+key,
+                                   url:"<?php echo base_url();?>dashboard/getFbidToNameAjax/"+key,
                                    async:false,
                                    success: function(data){
                                    return data;
@@ -240,6 +243,7 @@ $('#getpsetting').live("click", function () {
 								
 
 			}
+                        }
 			});
                         
           //ajax call to get new interest data for update tab
@@ -275,6 +279,7 @@ $('#getpsetting').live("click", function () {
                                                 $( "#tabs" ).tabs( "enable", 2);
                                                 $( "#tabs" ).tabs( "enable", 3);
                                                 $( "#tabs" ).tabs( "enable", 4);
+                                               
                                                 var prodetails = JSON.parse(data);
 						$('#panelname').html(prodetails.uFname+" "+prodetails.uLname);
 						
