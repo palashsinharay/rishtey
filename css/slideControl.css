@@ -1,0 +1,105 @@
+.slideControlContainer {
+	height:10px; 
+	background: #b3b3b3; /* Old browsers */
+	background: -moz-linear-gradient(top, #b3b3b3 0%, #b3b3b3 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b3b3b3), color-stop(100%,#b3b3b3)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #b3b3b3 0%,#b3b3b3 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #b3b3b3 0%,#b3b3b3 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #b3b3b3 0%,#b3b3b3 100%); /* IE10+ */
+	border:1px solid #8e8e8e;
+	box-shadow:inset 0 2px 2px #a1a1a1;
+	-moz-box-shadow:inset 0 2px 2px #a1a1a1;
+	-webkit-box-shadow:inset 0 2px 2px #a1a1a1;
+	-ms-box-shadow:inset 0 2px 2px #a1a1a1;
+	-o-box-shadow:inset 0 2px 2px #a1a1a1;
+	-khtml-box-shadow:inset 0 2px 2px #a1a1a1;
+	border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	-o-border-radius:6px;
+	-khtml-border-radius:6px;
+	-ms-border-radius:6px;
+	cursor:pointer;
+	width:421px;
+	float:left;
+	margin:10px 1px 0 0;
+	display:block;
+}
+	
+.slideControlFill {
+	background: #01a3ff/*93a833*/; /* Old browsers */
+	background: -moz-linear-gradient(top, #01a3ff/*93a833*/ 0%, #01a3ff/*93a833*/ 50%, #01a3ff/*93a833*/ 51%, #01a3ff/*93a833*/ 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#01a3ff), color-stop(50%,#01a3ff), color-stop(51%,#01a3ff), color-stop(100%,#01a3ff)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #01a3ff 0%,#01a3ff 50%,#01a3ff 51%,#01a3ff 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #01a3ff 0%,#01a3ff 50%,#01a3ff 51%,#01a3ff 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #01a3ff 0%,#01a3ff 50%,#01a3ff 51%,#01a3ff 100%); /* IE10+ */
+	display:block;
+	height:100%;
+	border-radius:6px;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	-ms-order-radius:6px;
+	-o-border-radius:6px;
+	-khtml-border-radius:6px;
+	/*box-shadow:inset 0 2px 2px #27709a/*859a27;
+	-moz-box-shadow:inset 0 2px 2px #27709a;
+	-webkit-box-shadow:inset 0 2px 2px #27709a;
+	-ms-box-shadow:inset 0 2px 2px #27709a;
+	-o-box-shadow:inset 0 2px 2px #27709a;
+	-khtml-box-shadow:inset 0 2px 2px #27709a;*/
+	position:relative;
+	z-index:1;
+	overflow:visible !important;
+	/*padding-left:4px;*/
+}
+	
+.slideControlHandle {
+	display:block; 
+	background: #f1f1f1; /* Old browsers */
+	background: -moz-linear-gradient(top, #f3f3f3 0%, #f2f2f2 25%, #f0f0f0 35%, #efefef 50%, #e9e9e9 51%, #e7e7e7 75%, #e5e5e5 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f3f3), color-stop(25%,#f2f2f2), color-stop(35%,#f0f0f0), color-stop(50%,#efefef), color-stop(51%,#e9e9e9), color-stop(75%,#e7e7e7), color-stop(100%,#e5e5e5)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #f3f3f3 0%,#f2f2f2 25%,#f0f0f0 35%,#efefef 50%,#e9e9e9 51%,#e7e7e7 75%,#e5e5e5 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #f3f3f3 0%,#f2f2f2 25%,#f0f0f0 35%,#efefef 50%,#e9e9e9 51%,#e7e7e7 75%,#e5e5e5 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #f3f3f3 0%,#f2f2f2 25%,#f0f0f0 35%,#efefef 50%,#e9e9e9 51%,#e7e7e7 75%,#e5e5e5 100%); /* IE10+ */
+	border-radius:3px;
+	border:1px solid #d9d9d9;
+	width:10px;
+	height:25px;
+	box-shadow:0 3px 0 #FFF inset;
+	-moz-box-shadow:0 3px 0 #FFF inset;
+	-webkit-box-shadow:0 3px 0 #FFF inset;
+	-ms-box-shadow:0 3px 0 #FFF inset;
+	-o-box-shadow:0 3px 0 #FFF inset;
+	-khtml-box-shadow:0 3px 0 #FFF inset;
+	position:absolute;
+	right:0;
+	top:-9px;
+	z-index:5;
+	cursor:pointer;
+}
+
+.ieShadow {
+	zoom: 1;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=0,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=45,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=90,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=135,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=180,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=225,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=270,strength=1), 
+  progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa,direction=315,strength=1);
+	top:-12px;
+	right:-4px;
+}
+	
+.slideControlInput {
+	border:none;
+	outline:none;
+	background:url(../images/slide-controller.png) no-repeat 0 0 transparent !important;
+	padding:0 0 0 15px !important;
+	margin:0 !important;
+	width:65px !important;
+	text-align:left !important;
+	height:30px;
+	display:block;
+}

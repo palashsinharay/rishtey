@@ -1,0 +1,1 @@
+Stores logged in user's small images

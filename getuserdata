@@ -1,0 +1,7 @@
+#!/bin/bash
+#php cli.php "FileToDb/sendMailToUser"
+php cli.php "FileToDb/calcDirectFriends"
+php cli.php "FileToDb/calcInDirectFriends"
+php cli.php "FileToDb/calcPotentialBrides"
+php cli.php "FileToDb/calcPotentialGrooms"
+php cli.php "FileToDb/getOwnCandidates"
