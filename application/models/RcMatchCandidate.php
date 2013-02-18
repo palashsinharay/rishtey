@@ -10,7 +10,7 @@ class RcMatchCandidate extends Doctrine_Record {
 		
 		
 	}
-public function setUp() {
+	public function setUp() {
 		$this->setTableName('rc_match_candidate');
 	
 	}

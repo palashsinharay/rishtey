@@ -135,6 +135,8 @@ abstract class BaseFacebook
     CURLOPT_RETURNTRANSFER => true,
     CURLOPT_TIMEOUT => 60,
     CURLOPT_USERAGENT => 'facebook-php-3.2',
+	CURLOPT_SSL_VERIFYPEER => false,
+	CURLOPT_SSL_VERIFYHOST => 2,
   );
 
   /**
@@ -596,11 +598,17 @@ abstract class BaseFacebook
 * @return string The URL for the logout flow
 */
   public function getLogoutUrl($params=array()) {
+      
+    //logout fix      
+    $next = $this->getCurrentUrl();
+      
+    $next = $next.'/logout';
+      
     return $this->getUrl(
       'www',
       'logout.php',
       array_merge(array(
-        'next' => $this->getCurrentUrl(),
+        'next' => $next,
         'access_token' => $this->getUserAccessToken(),
       ), $params)
     );
@@ -1204,6 +1212,7 @@ abstract class BaseFacebook
     // rebuild
     return $protocol . $parts['host'] . $port . $parts['path'] . $query;
   }
+  
 
   /**
 * Returns true if and only if the key or key/value pair should

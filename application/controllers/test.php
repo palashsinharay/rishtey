@@ -1,41 +1,58 @@
 <?php
-class Test extends Controller{
-	function index(){
-		
-		//$this->load->helper('file');	
-				echo $base = APPPATH."test.txt";
-				$data[0] = "sinharay";
-				$data[1] = "dutta";
-				$data[2] = "rama";
-				$sdata = serialize($data);
-				$string = write_file($base,$sdata,'a+');
-				//echo $string;
-		
-		
-/*
-$filename = APPPATH."test.txt";
-$handle = fopen($filename, "w");
+error_reporting(1);
+//require_once(APPPATH . '/controllers/candidate.php');
 
-while(!feof($handle))
-  {
-  echo fgets($handle). "<br />";
-  }
-fwrite($handle, '1');
-fwrite($handle, '23');
-fclose($handle);*/
+class test extends Controller {
+    public static $bucket;
+    
+    public function __construct() {
+        parent::__construct();
+        //$this->config->load('s3');
+        $config['accessKey'] = $this->config->item('accessKey');
+        $config['secretKey'] = $this->config->item('secretKey');
+        self::$bucket = $this->config->item('bucket');
+        $this->load->library('S3',$config);
+        
+    }
+    
+    
+    /**
+     * @param GLOBAL $_POST['profileFbId'] candidate's facebook id
+     * @return JSON encoded string
+     */
+    function unitT_getProfileDetails($fbid){
+        $_POST['profileFbId'] = $fbid;
+        $testResult = $this->getProfileDetails();
+    }
+    
+    function index(){
+        
+        $bucketname = self::$bucket;
+        //print_r($config);
+        
+        //$s3 = new S3($config);
+        // Create a Bucket
+       // var_dump($this->s3->putBucket($bucketname, $this->s3->ACL_PUBLIC_READ));
 
-//echo $contents;	
-		/*
-		$data = 'Some file data';
-		
-					if ( ! write_file($base.'file.php', $data,'r+'))
-					{
-						 echo 'Unable to write the file';
-					}
-					else
-					{
-						 echo 'File written!';
-					}*/
-		
-	}
+        // List Buckets
+        //$buckets = $this->s3->listBuckets();
+        //var_dump($buckets);
+        
+        // Get the contents of our bucket  
+        $bucket_contents = $this->s3->getBucket($bucketname);
+        
+        foreach ($bucket_contents as $file){  
+            $fname = $file['name'];  
+            $furl = "http://$bucketname.s3.amazonaws.com/".$fname;  
+            //output a link to the file  
+            echo "<a href=\"$furl\"><img src=\"$furl\"/></a><br />";  
+        } 
+        
+        //var_dump($this->s3->getBucketLocation($buckets[4]));
+        //$this->s3->getAuth();
+    }
+    
+    
+    
 }
+?>

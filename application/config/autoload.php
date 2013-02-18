@@ -39,7 +39,7 @@
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('session','database');
+$autoload['libraries'] = array('session','database','form_validation','email','html2fpdf','Timer','image_lib');
 
 
 /*
@@ -51,7 +51,7 @@ $autoload['libraries'] = array('session','database');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file');
+$autoload['helper'] = array('url','file', 'cookie', 'form');
 
 
 /*
@@ -79,7 +79,7 @@ $autoload['plugin'] = array('doctrine');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('mail','fbapp','rcapp_settings','s3');
 
 
 /*
